@@ -2,6 +2,8 @@ from discord.ext import commands
 import discord
 import aiohttp
 import random
+import redditeasy
+import datetime
 
 class Meme(commands.Cog):
     def __init__(self, bot):
@@ -9,13 +11,12 @@ class Meme(commands.Cog):
     
     @commands.command(name = 'meme', description = 'Gives you a random meme from reddit. Subreddit: r/dankmemes')
     async def meme(self, ctx):
-        embed = discord.Embed(title="", description="", color= discord.Color.blue())
-
-        async with aiohttp.ClientSession() as cs:
-            async with cs.get('https://www.reddit.com/r/dankmemes/new.json?sort=hot') as r:
-                res = await r.json()
-                embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
-                await ctx.send(embed=embed)
+        post = redditeasy.Subreddit()
+        postoutput = post.get_post(subreddit="meme")
+        formatted_time = datetime.datetime.fromtimestamp(postoutput.created_at).strftime("%d/%m/%Y %I:%M:%S UTC")
+        embed = discord.Embed(title = postoutput.title, description = postoutput.subreddit_name, color = discord.Color.blue())
+        embed.set_image(url = postoutput.content)
+        await ctx.send(embed = embed)
 
 async def setup(bot):
     await bot.add_cog(Meme(bot))

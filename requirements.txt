@@ -1,0 +1,5 @@
+youtube_dl
+discord
+dotenv
+discord.py[voice]
+aiohttp

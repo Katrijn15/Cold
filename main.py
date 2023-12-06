@@ -4,7 +4,6 @@ import os
 from dotenv import load_dotenv
 import asyncio
 import aiohttp
-from discord import app_commands
 
 load_dotenv()
 
@@ -16,7 +15,7 @@ GUILD_ID = os.getenv('GUILD_ID')
 
 intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix = BOT_PREFIX, intents = intents)
+bot = commands.Bot(command_prefix= BOT_PREFIX, intents = intents)
 
 async def main():
 
