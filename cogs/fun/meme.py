@@ -12,7 +12,7 @@ class Meme(commands.Cog):
     @commands.command(name = 'meme', description = 'Gives you a random meme from reddit. Subreddit: r/dankmemes')
     async def meme(self, ctx):
         post = redditeasy.Subreddit()
-        postoutput = post.get_post(subreddit="meme")
+        postoutput = post.get_post(subreddit="dankmemes")
         formatted_time = datetime.datetime.fromtimestamp(postoutput.created_at).strftime("%d/%m/%Y %I:%M:%S UTC")
         embed = discord.Embed(title = postoutput.title, description = postoutput.subreddit_name, color = discord.Color.blue())
         embed.set_image(url = postoutput.content)
