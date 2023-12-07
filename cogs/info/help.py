@@ -86,7 +86,7 @@ class Help(commands.Cog):
 
                     # making title - getting description from doc-string below class
                     emb = discord.Embed(title=f'{cog} - Commands', description=self.bot.cogs[cog].__doc__,
-                                        color=discord.Color.blue())
+                                        color=discord.Color.blue()())
 
                     # getting commands from cog
                     for command in self.bot.get_cog(cog).get_commands():

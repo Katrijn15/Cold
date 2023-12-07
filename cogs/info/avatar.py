@@ -5,11 +5,11 @@ class Avatar(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command(name = 'Avatar', aliases = ['a', 'av', 'ava', 'avatar'], description = 'Show a mentioned person\'s avatar.')
+    @commands.command(name = 'avatar', aliases = ['a', 'av', 'ava'], description = 'Show a mentioned person\'s avatar.')
     async def avatar(self, ctx, *, avamember: discord.Member = None):
         if avamember == None:
                 embed = discord.Embed(description='❌ Error! Please specify a user',
-                                    color=discord.Color.red())
+                                    color=discord.Color.blue())
                 await ctx.reply(embed=embed, mention_author=False)
 
         else:
