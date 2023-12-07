@@ -1,5 +1,6 @@
 youtube_dl
 discord
-dotenv
+python-dotenv
 discord.py[voice]
 aiohttp
+redditeasy

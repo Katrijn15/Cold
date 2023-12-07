@@ -1,0 +1,1 @@
+C:\Users\katri\Desktop\Cold\.venv\Scripts\activate

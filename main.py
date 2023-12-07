@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 import asyncio
 import aiohttp
+from discord import app_commands
+import wavelink
 
 load_dotenv()
 
@@ -13,8 +15,7 @@ OWNER_ID = os.getenv('OWNER_ID')
 OWNER_NAME = os.getenv('OWNER_NAME')
 GUILD_ID = os.getenv('GUILD_ID')
 
-intents = discord.Intents.default()
-intents.message_content = True
+intents = discord.Intents.all()
 bot = commands.Bot(command_prefix= BOT_PREFIX, intents = intents)
 
 async def main():
@@ -23,11 +24,6 @@ async def main():
     async def on_ready():
         print(f'User: {bot.user} [ID: {bot.user.id}]')
         bot.remove_command('help')
-
-        for filename in os.listdir('./cogs'):
-            if filename.endswith('.py'):
-                await bot.load_extension(f'cogs.{filename[:-3]}')
-                print(f"Loaded Cog: {filename[:-3]}")
 
         for filename in os.listdir('./cogs/info'):
             if filename.endswith('.py'):

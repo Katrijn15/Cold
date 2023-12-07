@@ -1,1 +1,1 @@
-C:\Users\katri\Desktop\Cold\.venv\Scripts\activate.bat
+C:\Users\katri\Desktop\Cold\.venv\Scripts\activate & python main.py
