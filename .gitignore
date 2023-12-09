@@ -1,5 +1,8 @@
 
 run.bat
+open_terminal_here.bat
+
+test.py
 
 .env
 .venv
