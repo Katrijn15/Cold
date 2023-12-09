@@ -3,4 +3,4 @@ python-dotenv
 discord.py[voice]
 aiohttp
 redditeasy
-spotipy
+youtube_dl

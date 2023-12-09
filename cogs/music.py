@@ -380,134 +380,134 @@ class Music(commands.Cog):
         return
     # ----------------------------------------------------------------------------------------------------------------------
 
-    @commands.command(name="playm", aliases=["streamm", "pm", "addm"], description="plays multiple songs (seperated by semicolons ';')")
-    async def playm(self, ctx, *, args):
-        self.add_guild(ctx)
-        urls = args.split(';')
-        joined = await self.join(ctx)
-        if joined == False:
-            return
-        last_url = urls.pop()
-        for url in urls:
-            url = url.strip()
-            player_and_data = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
-            player = player_and_data[0]
-            data = player_and_data[1]
-            if player is None:
-                async with ctx.typing():
-                    embed = discord.Embed(
-                        title="Error",
-                        description=''.join(self.bad_request_error_message),
-                        colour=discord.Color.blue(),
-                        timestamp=datetime.utcnow(),
-                    )
-                await ctx.send(reference=ctx.message, embed=embed)
-                continue
-            self.music_queue[str(ctx.guild.id)].append(
-                [player, ctx, url, True])
-            self.properties[str(ctx.guild.id)]["queued"] += 1
-            async with ctx.typing():
-                embed = discord.Embed(
-                    title="Added to queue",
-                    description="\"" + url + "\" requested by " + ctx.author.mention,
-                    colour=discord.Color.blue(),
-                    timestamp=datetime.utcnow(),
-                )
-                embed.set_thumbnail(url=self.MUSIC_ICON)
-                embed.set_author(name=player.title, url="https://www.youtube.com/watch?v=" + data['id'],
-                                 icon_url=ctx.author.avatar.url)
-                embed.add_field(name="Title", value=player.title, inline=False)
-                embed.add_field(name="Queue Position", value=len(
-                    self.music_queue[str(ctx.guild.id)]), inline=True)
-            await ctx.send(reference=ctx.message, embed=embed)
-        await self.play(ctx, url=last_url)
-        return
-    # ----------------------------------------------------------------------------------------------------------------------
-
-    @commands.command(name='dplay', description="downloads a song and then queues it to reduce any possible lags")
-    async def dplay(self, ctx, *, url):
-        self.add_guild(ctx)
-        joined = await self.join(ctx)
-        if joined == False:
-            return
-        player_and_data = await YTDLSource.from_url(url, loop=self.bot.loop)
-        player = player_and_data[0]
-        data = player_and_data[1]
-        if player is None:
-            async with ctx.typing():
-                embed = discord.Embed(
-                    title="Error",
-                    description=''.join(self.bad_request_error_message),
-                    colour=0xff0000,
-                    timestamp=datetime.utcnow()
-                )
-            await ctx.send(reference=ctx.message, embed=embed)
-            return
-        self.music_queue[str(ctx.guild.id)].append([player, ctx, url, False])
-        self.properties[str(ctx.guild.id)]["queued"] += 1
-        async with ctx.typing():
-            embed = discord.Embed(
-                title="Downloaded & Added to queue",
-                description="\"" + url + "\" requested by " + ctx.author.mention,
-                colour=discord.Color.blue(),
-                timestamp=datetime.utcnow(),
-            )
-            embed.set_thumbnail(url=self.MUSIC_ICON)
-            embed.set_author(name=player.title, url="https://www.youtube.com/watch?v=" + data['id'],
-                             icon_url=ctx.author.avatar.url)
-            embed.add_field(name="Title", value=player.title, inline=False)
-            embed.add_field(name="Queue Position", value=len(
-                self.music_queue[str(ctx.guild.id)]), inline=True)
-        await ctx.send(reference=ctx.message, embed=embed)
-        if not self.properties[str(ctx.guild.id)]["inside_keep_playing"]:
-            await self.keep_playing(ctx)
-        return
-    # ----------------------------------------------------------------------------------------------------------------------
-
-    @commands.command(name='dplaym', description="dplays multiple songs (seperated by semicolons ';')")
-    async def dplaym(self, ctx, *, args):
-        self.add_guild(ctx)
-        urls = args.split(';')
-        joined = await self.join(ctx)
-        if joined == False:
-            return
-        last_url = urls.pop()
-        for url in urls:
-            url = url.strip()
-            player_and_data = await YTDLSource.from_url(url, loop=self.bot.loop)
-            player = player_and_data[0]
-            data = player_and_data[1]
-            if player is None:
-                async with ctx.typing():
-                    embed = discord.Embed(
-                        title="Error",
-                        description=''.join(self.bad_request_error_message),
-                        colour=0xff0000,
-                        timestamp=datetime.utcnow()
-                    )
-                await ctx.send(reference=ctx.message, embed=embed)
-                continue
-            self.music_queue[str(ctx.guild.id)].append(
-                [player, ctx, url, False])
-            self.properties[str(ctx.guild.id)]["queued"] += 1
-            async with ctx.typing():
-                embed = discord.Embed(
-                    title="Downloaded & Added to queue",
-                    description="\"" + url + "\" requested by " + ctx.author.mention,
-                    colour=discord.Color.blue(),
-                    timestamp=datetime.utcnow(),
-                )
-                embed.set_thumbnail(url=self.MUSIC_ICON)
-                embed.set_author(name=player.title, url="https://www.youtube.com/watch?v=" + data['id'],
-                                 icon_url=ctx.author.avatar.url)
-                embed.add_field(name="Title", value=player.title, inline=False)
-                embed.add_field(name="Queue Position", value=len(
-                    self.music_queue[str(ctx.guild.id)]), inline=True)
-                # embed.set_image(url="https://img.youtube.com/vi/" + player + "/0.jpg")
-                # embed.set_image(url=data[])
-            await ctx.send(reference=ctx.message, embed=embed)
-        await self.dplay(ctx, url=last_url)
-        return
+#   @commands.command(name="playm", aliases=["streamm", "pm", "addm"], description="plays multiple songs (seperated by semicolons ';')")
+#   async def playm(self, ctx, *, args):
+#       self.add_guild(ctx)
+#       urls = args.split(';')
+#       joined = await self.join(ctx)
+#       if joined == False:
+#           return
+#       last_url = urls.pop()
+#       for url in urls:
+#           url = url.strip()
+#           player_and_data = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
+#           player = player_and_data[0]
+#           data = player_and_data[1]
+#           if player is None:
+#               async with ctx.typing():
+#                   embed = discord.Embed(
+#                       title="Error",
+#                       description=''.join(self.bad_request_error_message),
+#                       colour=discord.Color.blue(),
+#                       timestamp=datetime.utcnow(),
+#                   )
+#               await ctx.send(reference=ctx.message, embed=embed)
+#               continue
+#           self.music_queue[str(ctx.guild.id)].append(
+#               [player, ctx, url, True])
+#           self.properties[str(ctx.guild.id)]["queued"] += 1
+#           async with ctx.typing():
+#               embed = discord.Embed(
+#                   title="Added to queue",
+#                   description="\"" + url + "\" requested by " + ctx.author.mention,
+#                   colour=discord.Color.blue(),
+#                   timestamp=datetime.utcnow(),
+#               )
+#               embed.set_thumbnail(url=self.MUSIC_ICON)
+#               embed.set_author(name=player.title, url="https://www.youtube.com/watch?v=" + data['id'],
+#                                icon_url=ctx.author.avatar.url)
+#               embed.add_field(name="Title", value=player.title, inline=False)
+#               embed.add_field(name="Queue Position", value=len(
+#                   self.music_queue[str(ctx.guild.id)]), inline=True)
+#           await ctx.send(reference=ctx.message, embed=embed)
+#       await self.play(ctx, url=last_url)
+#       return
+#   # ----------------------------------------------------------------------------------------------------------------------
+#
+#   @commands.command(name='dplay', description="downloads a song and then queues it to reduce any possible lags")
+#   async def dplay(self, ctx, *, url):
+#       self.add_guild(ctx)
+#       joined = await self.join(ctx)
+#       if joined == False:
+#           return
+#       player_and_data = await YTDLSource.from_url(url, loop=self.bot.loop)
+#       player = player_and_data[0]
+#       data = player_and_data[1]
+#       if player is None:
+#           async with ctx.typing():
+#               embed = discord.Embed(
+#                   title="Error",
+#                   description=''.join(self.bad_request_error_message),
+#                   colour=0xff0000,
+#                   timestamp=datetime.utcnow()
+#               )
+#           await ctx.send(reference=ctx.message, embed=embed)
+#           return
+#       self.music_queue[str(ctx.guild.id)].append([player, ctx, url, False])
+#       self.properties[str(ctx.guild.id)]["queued"] += 1
+#       async with ctx.typing():
+#           embed = discord.Embed(
+#               title="Downloaded & Added to queue",
+#               description="\"" + url + "\" requested by " + ctx.author.mention,
+#               colour=discord.Color.blue(),
+#               timestamp=datetime.utcnow(),
+#           )
+#           embed.set_thumbnail(url=self.MUSIC_ICON)
+#           embed.set_author(name=player.title, url="https://www.youtube.com/watch?v=" + data['id'],
+#                            icon_url=ctx.author.avatar.url)
+#           embed.add_field(name="Title", value=player.title, inline=False)
+#           embed.add_field(name="Queue Position", value=len(
+#               self.music_queue[str(ctx.guild.id)]), inline=True)
+#       await ctx.send(reference=ctx.message, embed=embed)
+#       if not self.properties[str(ctx.guild.id)]["inside_keep_playing"]:
+#           await self.keep_playing(ctx)
+#       return
+#   # ----------------------------------------------------------------------------------------------------------------------
+#
+#   @commands.command(name='dplaym', description="dplays multiple songs (seperated by semicolons ';')")
+#   async def dplaym(self, ctx, *, args):
+#       self.add_guild(ctx)
+#       urls = args.split(';')
+#       joined = await self.join(ctx)
+#       if joined == False:
+#           return
+#       last_url = urls.pop()
+#       for url in urls:
+#           url = url.strip()
+#           player_and_data = await YTDLSource.from_url(url, loop=self.bot.loop)
+#           player = player_and_data[0]
+#           data = player_and_data[1]
+#           if player is None:
+#               async with ctx.typing():
+#                   embed = discord.Embed(
+#                       title="Error",
+#                       description=''.join(self.bad_request_error_message),
+#                       colour=0xff0000,
+#                       timestamp=datetime.utcnow()
+#                   )
+#               await ctx.send(reference=ctx.message, embed=embed)
+#               continue
+#           self.music_queue[str(ctx.guild.id)].append(
+#               [player, ctx, url, False])
+#           self.properties[str(ctx.guild.id)]["queued"] += 1
+#           async with ctx.typing():
+#               embed = discord.Embed(
+#                   title="Downloaded & Added to queue",
+#                   description="\"" + url + "\" requested by " + ctx.author.mention,
+#                   colour=discord.Color.blue(),
+#                   timestamp=datetime.utcnow(),
+#               )
+#               embed.set_thumbnail(url=self.MUSIC_ICON)
+#               embed.set_author(name=player.title, url="https://www.youtube.com/watch?v=" + data['id'],
+#                                icon_url=ctx.author.avatar.url)
+#               embed.add_field(name="Title", value=player.title, inline=False)
+#               embed.add_field(name="Queue Position", value=len(
+#                   self.music_queue[str(ctx.guild.id)]), inline=True)
+#               # embed.set_image(url="https://img.youtube.com/vi/" + player + "/0.jpg")
+#               # embed.set_image(url=data[])
+#           await ctx.send(reference=ctx.message, embed=embed)
+#       await self.dplay(ctx, url=last_url)
+#       return
     # ----------------------------------------------------------------------------------------------------------------------
 
     @commands.command(name='loop', description="toggles looping of the queue")
